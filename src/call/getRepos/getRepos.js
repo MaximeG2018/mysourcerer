@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import gql from "graphql-tag";
 
 export const GET_REPO = gql`
@@ -7,7 +6,6 @@ export const GET_REPO = gql`
       repositories(orderBy: { field: CREATED_AT, direction: DESC }, last: 23) {
         nodes {
           name
-          createdAt
           updatedAt
           url
           isPrivate
@@ -22,19 +20,12 @@ export const GET_REPO = gql`
               name
               color
             }
-            edges {
-              size
-              cursor
-            }
           }
           defaultBranchRef {
             target {
               ... on Commit {
                 history {
                   totalCount
-                  nodes {
-                    committedDate
-                  }
                 }
               }
             }

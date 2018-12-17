@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Table,
-  Head,
-  SearchHeaderCell,
-  TextCell,
-  TextHeaderCell,
-  Body
-} from "evergreen-ui";
+import { Table } from "evergreen-ui";
 import { Tag, Avatar } from "antd";
 import moment from "moment";
 
@@ -25,8 +18,8 @@ class Repos extends Component {
             <Table.TextHeaderCell>collaborators</Table.TextHeaderCell>
           </Table.Head>
           <Table.Body height={240}>
-            {this.props.repoList.map(item => (
-              <Table.Row key={item.id} isSelectable>
+            {this.props.repoList.map((item, index) => (
+              <Table.Row key={index} isSelectable>
                 <Table.TextCell>{item.name}</Table.TextCell>
                 <Table.TextCell>{item.url}</Table.TextCell>
 
@@ -39,13 +32,19 @@ class Repos extends Component {
                     : "none"}
                 </Table.TextCell>
                 <Table.TextCell>
-                  {item.languages.nodes.map(language => {
-                    return <Tag color={language.color}>{language.name}</Tag>;
+                  {item.languages.nodes.map((language, index) => {
+                    return (
+                      <Tag key={index} color={language.color}>
+                        {language.name}
+                      </Tag>
+                    );
                   })}
                 </Table.TextCell>
                 <Table.TextCell>
-                  {item.collaborators.nodes.map(collab => {
-                    return <Avatar src={collab.avatarUrl} size={24} />;
+                  {item.collaborators.nodes.map((collab, index) => {
+                    return (
+                      <Avatar key={index} src={collab.avatarUrl} size={24} />
+                    );
                   })}
                 </Table.TextCell>
               </Table.Row>

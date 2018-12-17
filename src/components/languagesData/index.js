@@ -15,22 +15,20 @@ class LanguagesData extends Component {
         }
       ]
     };
-    const result = {};
-    this.props.languages.forEach(
-      (key, value) => (result[key] = this.props.color[value])
-    );
 
+    console.log(this.props.totalCommit);
     return (
       <>
         <h2>Languages</h2>
 
         <Pane clearfix>
-          {Object.keys(result).map(function(key, index) {
+          {this.props.totalCommit.map(function(key, index) {
             return (
               <Pane
+                key={index}
                 elevation={0}
                 float="left"
-                backgroundColor={result[key]}
+                backgroundColor={key.color}
                 width={150}
                 height={90}
                 margin={24}
@@ -39,7 +37,8 @@ class LanguagesData extends Component {
                 alignItems="center"
                 flexDirection="column"
               >
-                <Text color="white">{key}</Text>
+                <Text color="white">{key.name}</Text>
+                <Text>Commit : {key.commit}</Text>
               </Pane>
             );
           })}

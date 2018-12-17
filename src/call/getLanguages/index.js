@@ -1,14 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import { Query } from "react-apollo";
 import { GET_LANGUAGES } from "./getLanguages";
 import LanguagesData from "../../components/languagesData";
 import { Spinner } from "evergreen-ui";
+import _ from "lodash";
 
 export const GetLanguages = props => {
   return (
     <>
       <Query query={GET_LANGUAGES}>
-        {({ loading, error, data }) => {
+        {({ loading, error, data: { viewer } }) => {
           if (loading) {
             return <Spinner />;
           }
@@ -16,7 +17,8 @@ export const GetLanguages = props => {
           const languages = [];
           const color = [];
           const count = [];
-          data.viewer.repositories.nodes.map(item => {
+          const arrLangCommit = [];
+          viewer.repositories.nodes.map(item => {
             item.languages.nodes.map(language => {
               arrAllLanguages.push(language.name);
               if (
@@ -28,6 +30,27 @@ export const GetLanguages = props => {
               }
             });
           });
+          viewer.repositories.nodes.map(total => {
+            total.languages.nodes.map(item => {
+              if (languages.includes(item.name) && total.defaultBranchRef) {
+                arrLangCommit.push({
+                  name: item.name,
+                  commit: total.defaultBranchRef.target.history.totalCount,
+                  color: item.color
+                });
+              }
+            });
+          });
+
+          var totalCommit = _(arrLangCommit)
+            .groupBy("name")
+            .map((objs, key) => ({
+              name: key,
+              commit: _.sumBy(objs, "commit"),
+              color: _.find(objs, "color").color
+            }))
+            .value();
+
           const map = arrAllLanguages.reduce(
             (a, c) => ((a[c] = a[c] || 0), a[c]++, a),
             {}
@@ -35,13 +58,13 @@ export const GetLanguages = props => {
 
           const output = Object.keys(map).map(s => ({
             name: s,
-            count: map[s]
+            count: map[s],
+            commit: 0
           }));
 
           output.map(totalCount => {
-            count.push(totalCount.count);
+            return count.push(totalCount.count);
           });
-          console.log(count);
 
           return (
             <>
@@ -49,6 +72,7 @@ export const GetLanguages = props => {
                 languages={languages}
                 color={color}
                 count={count}
+                totalCommit={totalCommit}
               />
             </>
           );

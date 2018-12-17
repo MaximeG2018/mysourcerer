@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ApolloClient from "apollo-boost";
-import { ApolloProvider, Query } from "react-apollo";
-import gql from "graphql-tag";
+import { ApolloProvider } from "react-apollo";
 import { GetUser } from "./call/getUser";
 import { GetRepos } from "./call/getRepos";
 import { GetLanguages } from "./call/getLanguages";

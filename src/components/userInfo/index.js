@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
-import { Avatar, Layout } from "antd";
-
-const { Sider } = Layout;
+import { Avatar } from "antd";
 
 class UserInfo extends Component {
   render() {
