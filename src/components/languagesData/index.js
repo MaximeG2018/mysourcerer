@@ -16,7 +16,7 @@ class LanguagesData extends Component {
       ]
     };
 
-    console.log(this.props.totalCommit);
+    //console.log(this.props.totalCommit);
     return (
       <>
         <h2>Languages</h2>
