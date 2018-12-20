@@ -4,7 +4,6 @@ import { ApolloProvider } from "react-apollo";
 import { GetUser } from "./call/getUser";
 import { GetRepos } from "./call/getRepos";
 import { GetLanguages } from "./call/getLanguages";
-import { GetReposPagination } from "./call/repoPagination";
 import { Layout } from "antd";
 
 const client = new ApolloClient({
