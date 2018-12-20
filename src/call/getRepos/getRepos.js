@@ -1,9 +1,13 @@
 import gql from "graphql-tag";
 
 export const GET_REPO = gql`
-  query {
+  query($cursor: String) {
     viewer {
-      repositories(orderBy: { field: CREATED_AT, direction: DESC }, last: 23) {
+      repositories(
+        first: 1
+        orderBy: { field: CREATED_AT, direction: DESC }
+        after: $cursor
+      ) {
         nodes {
           name
           updatedAt
@@ -30,6 +34,10 @@ export const GET_REPO = gql`
               }
             }
           }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
         }
       }
     }

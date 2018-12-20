@@ -5,17 +5,36 @@ import Repos from "../../components/repos";
 import { Spinner } from "evergreen-ui";
 
 export const GetRepos = props => {
+  let arrRepo = [];
+  let getInfoUser;
+  const variables = {
+    cursor: null
+  };
+
   return (
     <>
-      <Query query={GET_REPO}>
-        {({ loading, error, data }) => {
+      <Query query={GET_REPO} variables={variables}>
+        {({ loading, error, data, fetchMore }) => {
           if (loading) {
             return <Spinner />;
           }
-          let arrRepo = [];
-          data.viewer.repositories.nodes.forEach(item => {
-            arrRepo.push(item);
-          });
+
+          const { pageInfo } = data.viewer.repositories;
+
+          console.log();
+
+          arrRepo = arrRepo.concat(data.viewer.repositories.nodes);
+
+          if (pageInfo.hasNextPage) {
+            fetchMore({
+              variables: {
+                cursor: pageInfo.endCursor
+              },
+              updateQuery: (prev, { fetchMoreResult }) => {
+                return Object.assign({}, prev, fetchMoreResult);
+              }
+            });
+          }
 
           return (
             <>

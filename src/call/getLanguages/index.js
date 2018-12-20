@@ -9,7 +9,7 @@ export const GetLanguages = props => {
   return (
     <>
       <Query query={GET_LANGUAGES}>
-        {({ loading, error, data }) => {
+        {({ loading, error, data: { viewer } }) => {
           if (loading) {
             return <Spinner />;
           }
@@ -18,7 +18,7 @@ export const GetLanguages = props => {
           const color = [];
           const count = [];
           const arrLangCommit = [];
-          data.viewer.repositories.nodes.map(item => {
+          viewer.repositories.nodes.map(item => {
             item.languages.nodes.map(language => {
               arrAllLanguages.push(language.name);
               if (
@@ -30,7 +30,7 @@ export const GetLanguages = props => {
               }
             });
           });
-          data.viewer.repositories.nodes.map(total => {
+          viewer.repositories.nodes.map(total => {
             total.languages.nodes.map(item => {
               if (languages.includes(item.name) && total.defaultBranchRef) {
                 arrLangCommit.push({

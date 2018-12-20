@@ -32,7 +32,6 @@ class App extends Component {
             </header>
             <GetRepos />
             <GetLanguages />
-            <GetReposPagination />
           </div>
         </ApolloProvider>
       </Layout>
