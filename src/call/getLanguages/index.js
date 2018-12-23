@@ -18,6 +18,10 @@ export const GetLanguages = props => {
           const color = [];
           const count = [];
           const arrLangCommit = [];
+          const countLoc = [];
+          let sum = 0;
+          let deletion = 0;
+          let totalLoc = 0;
           viewer.repositories.nodes.map(item => {
             item.languages.nodes.map(language => {
               arrAllLanguages.push(language.name);
@@ -31,12 +35,20 @@ export const GetLanguages = props => {
             });
           });
           viewer.repositories.nodes.map(total => {
+            if (total.defaultBranchRef) {
+              total.defaultBranchRef.target.history.nodes.map(loc => {
+                sum += loc.additions;
+                deletion += loc.deletions;
+                totalLoc = sum - deletion;
+              });
+            }
             total.languages.nodes.map(item => {
               if (languages.includes(item.name) && total.defaultBranchRef) {
                 arrLangCommit.push({
                   name: item.name,
                   commit: total.defaultBranchRef.target.history.totalCount,
-                  color: item.color
+                  color: item.color,
+                  additions: totalLoc
                 });
               }
             });
@@ -47,7 +59,8 @@ export const GetLanguages = props => {
             .map((objs, key) => ({
               name: key,
               commit: _.sumBy(objs, "commit"),
-              color: _.find(objs, "color").color
+              color: _.find(objs, "color").color,
+              additions: _.find(objs, "additions").additions
             }))
             .value();
 
