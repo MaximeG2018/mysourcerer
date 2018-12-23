@@ -18,12 +18,11 @@ export const GetLanguages = props => {
           const color = [];
           const count = [];
           const arrLangCommit = [];
-          const countLoc = [];
           let sum = 0;
           let deletion = 0;
           let totalLoc = 0;
-          viewer.repositories.nodes.map(item => {
-            item.languages.nodes.map(language => {
+          viewer.repositories.nodes.forEach(item => {
+            item.languages.nodes.forEach(language => {
               arrAllLanguages.push(language.name);
               if (
                 !languages.includes(language.name) &&
@@ -34,15 +33,15 @@ export const GetLanguages = props => {
               }
             });
           });
-          viewer.repositories.nodes.map(total => {
+          viewer.repositories.nodes.forEach(total => {
             if (total.defaultBranchRef) {
-              total.defaultBranchRef.target.history.nodes.map(loc => {
+              total.defaultBranchRef.target.history.nodes.forEach(loc => {
                 sum += loc.additions;
                 deletion += loc.deletions;
                 totalLoc = sum - deletion;
               });
             }
-            total.languages.nodes.map(item => {
+            total.languages.nodes.forEach(item => {
               if (languages.includes(item.name) && total.defaultBranchRef) {
                 arrLangCommit.push({
                   name: item.name,

@@ -6,7 +6,6 @@ import { Spinner } from "evergreen-ui";
 
 export const GetRepos = props => {
   let arrRepo = [];
-  let getInfoUser;
   const variables = {
     cursor: null
   };

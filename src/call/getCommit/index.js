@@ -4,7 +4,6 @@ import { GET_COMMIT } from "./getCommit";
 import { Spinner } from "evergreen-ui";
 import CommitData from "../../components/CommitData";
 import moment from "moment";
-import _ from "lodash";
 
 export const GetCommit = props => {
   return (
@@ -15,9 +14,9 @@ export const GetCommit = props => {
             return <Spinner />;
           }
           let getCommit = [];
-          viewer.repositories.nodes.map(item => {
+          viewer.repositories.nodes.forEach(item => {
             if (item.defaultBranchRef) {
-              item.defaultBranchRef.target.history.nodes.map(commitDate => {
+              item.defaultBranchRef.target.history.nodes.forEach(commitDate => {
                 getCommit.push(
                   moment(commitDate.committedDate).format("MMM YYYY")
                 );

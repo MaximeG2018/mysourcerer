@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
-import { Pane, Text } from "evergreen-ui";
 
 import { Line } from "react-chartjs-2";
 
@@ -8,8 +7,8 @@ class CommitData extends Component {
   render() {
     const arrDate = [];
     const arrData = [];
-    console.log(this.props.getCommit);
-    this.props.getCommit.map(item => {
+
+    this.props.getCommit.forEach(item => {
       arrDate.push(item.date);
       arrData.push(item.count);
     });
