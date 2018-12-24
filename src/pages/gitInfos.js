@@ -33,10 +33,6 @@ class GitInfo extends Component {
                 <header className="App-header">
                   <GetUser user={this.props.user} />
                 </header>
-                <Button type="primary" onClick={this.props.goBack}>
-                  <Icon type="left" />
-                  Backward
-                </Button>
               </Row>
               <h1>Repositories</h1>
               <GetRepos user={this.props.user} />

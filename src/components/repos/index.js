@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Table } from "evergreen-ui";
-import { Tag, Avatar } from "antd";
+import { Tag } from "antd";
 import moment from "moment";
 
 class Repos extends Component {

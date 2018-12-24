@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
-import { Avatar } from "antd";
+import { Avatar, Button, Icon } from "antd";
 
 class UserInfo extends Component {
   render() {
