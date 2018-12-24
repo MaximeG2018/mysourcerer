@@ -32,7 +32,7 @@ class Home extends Component {
           <div className="hero-body">
             <div className="container has-text-centered">
               <h1 className="title">My Sourcerer</h1>
-              <h2 className="subtitle">Find you github informations</h2>
+              <h2 className="subtitle">Find your github informations</h2>
             </div>
           </div>
         </section>
