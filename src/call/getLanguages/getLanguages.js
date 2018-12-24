@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const GET_LANGUAGES = gql`
-  query {
-    viewer {
+  query($login: String!) {
+    user(login: $login) {
       repositories(orderBy: { field: CREATED_AT, direction: DESC }, last: 23) {
         nodes {
           name

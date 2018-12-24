@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const GET_USER = gql`
-  query {
-    viewer {
+  query($login: String!) {
+    user(login: $login) {
       login
       name
       bio

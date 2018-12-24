@@ -2,22 +2,31 @@ import React from "react";
 import { Query } from "react-apollo";
 import { GET_USER } from "./getUser";
 import UserInfo from "../../components/userInfo";
+import { Spinner } from "evergreen-ui";
 
-export const GetUser = props => {
+export const GetUser = ({ user }) => {
+  const variables = {
+    login: user
+  };
+
   return (
     <>
-      <Query query={GET_USER} fetchPolicy="cache-and-network">
-        {({ loading, error, data: { viewer } }) => {
+      <Query query={GET_USER} variables={variables}>
+        {({ loading, error, data }) => {
           if (loading) {
-            return <span>WAIT</span>;
+            return (
+              <span>
+                <Spinner />
+              </span>
+            );
           }
-          const followersCount = viewer.followers.edges.length;
-          const followingCount = viewer.following.edges.length;
-          const arrData = viewer.repositories.nodes;
+
+          const followersCount = data.user.followers.edges.length;
+          const followingCount = data.user.following.edges.length;
+          const arrData = data.user.repositories.nodes;
           let commitCount = 0;
           arrData.forEach(item => {
             if (item.defaultBranchRef) {
-              //console.log(item.defaultBranchRef.target.history.totalCount);
               return (commitCount +=
                 item.defaultBranchRef.target.history.totalCount);
             }
@@ -27,12 +36,12 @@ export const GetUser = props => {
           return (
             <>
               <UserInfo
-                img={viewer.avatarUrl}
-                login={viewer.login}
+                img={data.user.avatarUrl}
+                login={data.user.login}
                 followersCount={followersCount}
                 followingCount={followingCount}
-                name={viewer.name}
-                bio={viewer.bio}
+                name={data.user.name}
+                bio={data.user.bio}
                 commitCount={commitCount}
                 repoCount={repoCount}
               />

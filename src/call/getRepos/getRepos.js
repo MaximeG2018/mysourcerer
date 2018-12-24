@@ -1,24 +1,18 @@
 import gql from "graphql-tag";
 
 export const GET_REPO = gql`
-  query($cursor: String) {
-    viewer {
+  query($cursor: String, $login: String!) {
+    user(login: $login) {
       repositories(
         first: 1
         orderBy: { field: CREATED_AT, direction: DESC }
         after: $cursor
+        privacy: PUBLIC
       ) {
         nodes {
           name
           updatedAt
           url
-          isPrivate
-          collaborators(first: 3) {
-            nodes {
-              login
-              avatarUrl
-            }
-          }
           languages(last: 100) {
             nodes {
               name

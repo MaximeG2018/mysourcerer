@@ -40,13 +40,6 @@ class Repos extends Component {
                     );
                   })}
                 </Table.TextCell>
-                <Table.TextCell>
-                  {item.collaborators.nodes.map((collab, index) => {
-                    return (
-                      <Avatar key={index} src={collab.avatarUrl} size={24} />
-                    );
-                  })}
-                </Table.TextCell>
               </Table.Row>
             ))}
           </Table.Body>

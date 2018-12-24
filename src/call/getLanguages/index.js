@@ -5,11 +5,14 @@ import LanguagesData from "../../components/languagesData";
 import { Spinner } from "evergreen-ui";
 import _ from "lodash";
 
-export const GetLanguages = props => {
+export const GetLanguages = ({ user }) => {
+  const variables = {
+    login: user
+  };
   return (
     <>
-      <Query query={GET_LANGUAGES}>
-        {({ loading, error, data: { viewer } }) => {
+      <Query query={GET_LANGUAGES} variables={variables}>
+        {({ loading, error, data: { user } }) => {
           if (loading) {
             return <Spinner />;
           }
@@ -21,7 +24,7 @@ export const GetLanguages = props => {
           let sum = 0;
           let deletion = 0;
           let totalLoc = 0;
-          viewer.repositories.nodes.forEach(item => {
+          user.repositories.nodes.forEach(item => {
             item.languages.nodes.forEach(language => {
               arrAllLanguages.push(language.name);
               if (
@@ -33,7 +36,7 @@ export const GetLanguages = props => {
               }
             });
           });
-          viewer.repositories.nodes.forEach(total => {
+          user.repositories.nodes.forEach(total => {
             if (total.defaultBranchRef) {
               total.defaultBranchRef.target.history.nodes.forEach(loc => {
                 sum += loc.additions;

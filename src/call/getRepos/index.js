@@ -4,10 +4,11 @@ import { GET_REPO } from "./getRepos";
 import Repos from "../../components/repos";
 import { Spinner } from "evergreen-ui";
 
-export const GetRepos = props => {
+export const GetRepos = ({ user }) => {
   let arrRepo = [];
   const variables = {
-    cursor: null
+    cursor: null,
+    login: user
   };
 
   return (
@@ -18,11 +19,9 @@ export const GetRepos = props => {
             return <Spinner />;
           }
 
-          const { pageInfo } = data.viewer.repositories;
+          const { pageInfo } = data.user.repositories;
 
-          console.log();
-
-          arrRepo = arrRepo.concat(data.viewer.repositories.nodes);
+          arrRepo = arrRepo.concat(data.user.repositories.nodes);
 
           if (pageInfo.hasNextPage) {
             fetchMore({

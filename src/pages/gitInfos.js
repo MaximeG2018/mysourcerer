@@ -5,7 +5,7 @@ import { GetUser } from "../call/getUser";
 import { GetRepos } from "../call/getRepos";
 import { GetLanguages } from "../call/getLanguages";
 import { GetCommit } from "../call/getCommit";
-import { Layout } from "antd";
+import { Layout, Button, Icon } from "antd";
 import { Row, Col } from "antd";
 
 const client = new ApolloClient({
@@ -29,20 +29,26 @@ class GitInfo extends Component {
         <Layout>
           <ApolloProvider client={client}>
             <div className="App">
-              <header className="App-header">
-                <GetUser />
-              </header>
+              <Row>
+                <header className="App-header">
+                  <GetUser user={this.props.user} />
+                </header>
+                <Button type="primary" onClick={this.props.goBack}>
+                  <Icon type="left" />
+                  Backward
+                </Button>
+              </Row>
               <h1>Repositories</h1>
-              <GetRepos />
+              <GetRepos user={this.props.user} />
               <h1>Commit</h1>
               <Row>
                 <Col span={12} offset={6}>
-                  <GetCommit />
+                  <GetCommit user={this.props.user} />
                 </Col>
               </Row>
               <Row>
                 <h1>Languages</h1>
-                <GetLanguages />
+                <GetLanguages user={this.props.user} />
               </Row>
             </div>
           </ApolloProvider>

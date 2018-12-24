@@ -5,16 +5,20 @@ import { Spinner } from "evergreen-ui";
 import CommitData from "../../components/CommitData";
 import moment from "moment";
 
-export const GetCommit = props => {
+export const GetCommit = ({ user }) => {
+  const variables = {
+    login: user
+  };
   return (
     <>
-      <Query query={GET_COMMIT}>
-        {({ loading, error, data: { viewer } }) => {
+      <Query query={GET_COMMIT} variables={variables}>
+        {({ loading, error, data }) => {
           if (loading) {
             return <Spinner />;
           }
+
           let getCommit = [];
-          viewer.repositories.nodes.forEach(item => {
+          data.user.repositories.nodes.forEach(item => {
             if (item.defaultBranchRef) {
               item.defaultBranchRef.target.history.nodes.forEach(commitDate => {
                 getCommit.push(
